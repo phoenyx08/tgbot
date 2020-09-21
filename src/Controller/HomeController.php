@@ -19,6 +19,8 @@ class HomeController extends AbstractController
         $updateId = $update->update_id;
         $message = $update->message;
         $messageId = $message->message_id;
+        $messageChat = $message->chat;
+        $chatId = $messageChat->id;
         $text = $message->text;
 
         $logger->info($content);
