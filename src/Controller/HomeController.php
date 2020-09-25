@@ -29,6 +29,7 @@ class HomeController extends AbstractController
      *
      * @Route("/{token}", name="home")
      * @return \Symfony\Component\HttpFoundation\JsonResponse
+     * @throws \Exception
      */
     public function index(string $token, Request $request, LoggerInterface $logger, Messenger $messenger)
     {
