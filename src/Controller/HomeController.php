@@ -4,8 +4,10 @@ namespace App\Controller;
 
 use App\Model\Update;
 use App\Service\Messenger;
+use Exception;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
@@ -16,7 +18,7 @@ class HomeController extends AbstractController
      * Main endpoint of the application.
      *
      * Right now we check requested url, its token parameter should be the same
-     * as bot-token. If they are not equal endpoint requrns 404. If the check is passed
+     * as bot-token. If they are not equal endpoint returns 404. If the check is passed
      * we send chat Id back to the user.
      * example curl request:
      * curl -X POST -H "Content-Type: application/json" \
@@ -25,11 +27,11 @@ class HomeController extends AbstractController
      * @param String $token Token contained in the Telegram-service request
      * @param LoggerInterface $logger Injects PSR-logger service
      * @param Messenger $messenger Injects service, responsible for sending messages
-     * @param Request $request Injects OOP-presendation of the request being sent to the endpoint
+     * @param Request $request Injects OOP-presentation of the request being sent to the endpoint
      *
      * @Route("/{token}", name="home")
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
-     * @throws \Exception
+     * @return JsonResponse
+     * @throws Exception
      */
     public function index(string $token, Request $request, LoggerInterface $logger, Messenger $messenger)
     {
