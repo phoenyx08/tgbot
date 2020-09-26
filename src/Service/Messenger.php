@@ -33,7 +33,7 @@ class Messenger
      * @throws Exception
      */
     public function sendChatId(int $chatId) {
-        $message = urlencode('Your chat id is ' . (string)$chatId);
+        $message = 'Your chat id is ' . (string)$chatId;
         try {
             return $this->sendMessage($chatId, $message);
         } catch (ClientExceptionInterface $e) {
@@ -58,8 +58,12 @@ class Messenger
      */
     protected function sendMessage($chatId, $message) {
         $response = $this->client->request(
-            'GET',
-            'https://api.telegram.org/bot' . $this->botToken . '/sendMessage?chat_id='. $chatId . '&text=' . $message);
+            'POST',
+            'https://api.telegram.org/bot' . $this->botToken . '/sendMessage',
+            ['json' => [
+                'chat_id' => $chatId,
+                'text' => $message,
+            ]]);
         return $response->getContent();
     }
 }
