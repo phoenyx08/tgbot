@@ -24,23 +24,16 @@ class HomeController extends AbstractController
      * curl -X POST -H "Content-Type: application/json" \
      * -d '{"update_id":"123","message":{"message_id":"321", "chat":{"id":012345678}}}' \
      * http://127.0.0.1:8000/123456:ABC-DEF1234ghIkl-zyx57W2v1u123ew11
-     * @param String $token Token contained in the Telegram-service request
      * @param LoggerInterface $logger Injects PSR-logger service
      * @param Messenger $messenger Injects service, responsible for sending messages
      * @param Request $request Injects OOP-presentation of the request being sent to the endpoint
      *
-     * @Route("/{token}", name="home")
+     * @Route("/", name="home")
      * @return JsonResponse
      * @throws Exception
      */
-    public function index(string $token, Request $request, LoggerInterface $logger, Messenger $messenger)
+    public function index(Request $request, LoggerInterface $logger, Messenger $messenger)
     {
-        $botToken = $_ENV['BOT_TOKEN'];
-
-        if ($botToken != $token) {
-            throw new NotFoundHttpException();
-        }
-
         $content = $request->getContent();
         $logger->info($content);
         $update = new Update($content);
