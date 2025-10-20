@@ -40,8 +40,10 @@ class HomeController extends AbstractController
         $message = $update->getMessage();
         $messageChat = $message->getChat();
         $chatId = $messageChat->getId();
-        $responseContent = $messenger->sendChatId($chatId);
-        $logger->info(json_encode($responseContent));
+        if ($chatId == $_ENV["TRUSTED_CHAT"]) {
+            $responseContent = $messenger->sendChatId($chatId);
+            $logger->info(json_encode($responseContent));
+        }
 
         return $this->json([
             'result' => 'ok',
